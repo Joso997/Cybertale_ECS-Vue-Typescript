@@ -1,11 +1,13 @@
 <template>
-  <div class="mb-3 row justify-content-md-center">
-    <div class="col"></div>
-    <div class="col">
+  <div class="mb-3">
+    <div class="p-3">
       <label class="form-label h3">{{object.Stats[statTypeEnum.Title].Data }}</label>
-      <input :class="`${object.Stats[statTypeEnum.Design].Data}`" v-model="object.Stats[statTypeEnum.Value].Data"  placeholder="edit me">
+      <textarea class="form-control" v-model="object.Stats[statTypeEnum.Value].Data" rows="9"  placeholder="edit me"></textarea>
     </div>
-    <div class="col"></div>
+    <div class="border mb-3">
+      <h3 class="text-start p-3">Prikaz</h3>
+      <div v-html="object.Stats[statTypeEnum.Value].Data"></div>
+    </div>
   </div>
 </template>
 

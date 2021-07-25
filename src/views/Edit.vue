@@ -1,18 +1,18 @@
 <template>
   <div class="container">
     <img alt="Vue logo" src="../assets/logo.png">
-    <TableComponent msg="Welcome to Your Vue.js + TypeScript App"/>
+    <FormComponent msg="Welcome to Your Vue.js + TypeScript App"/>
   </div>
 </template>
 
 <script lang="ts">
 import { Options, Vue } from 'vue-class-component'
-import TableComponent from '@/components/TableComponent.vue' // @ is an alias to /src
+import FormComponent from '@/components/FormComponent.vue' // @ is an alias to /src
 
 @Options({
   components: {
-    TableComponent
+    FormComponent
   }
 })
-export default class About extends Vue {}
+export default class Edit extends Vue {}
 </script>

@@ -1,12 +1,7 @@
 <template>
-  <div class="mb-3 row justify-content-md-center">
-    <div class="col"></div>
-    <div class="col">
-      <label class="form-label h3">{{object.Stats[statTypeEnum.Title].Data }}</label>
-      <input :class="`${object.Stats[statTypeEnum.Design].Data}`" v-model="object.Stats[statTypeEnum.Value].Data"  placeholder="edit me">
-    </div>
-    <div class="col"></div>
-  </div>
+  <h1 v-if="object.Stats[statTypeEnum.Label].Data === 'Title'">{{object.Stats[statTypeEnum.Value].Data}}</h1>
+  <div v-html="object.Stats[statTypeEnum.Value].Data" v-if="object.Stats[statTypeEnum.Label].Data === 'Content'"></div>
+  <img :src="object.Stats[statTypeEnum.Value].Data" class="rounded float-start" alt="..." v-if="object.Stats[statTypeEnum.Label].Data === 'Image'">
 </template>
 
 <script lang="ts">
@@ -18,7 +13,7 @@ import { ObjectType, StatTypeEnum, ObjectTypeEnum } from '@/interface/manager/ev
     object: ObjectTemplate
   }
 })
-export default class InputComponent extends Vue {
+export default class ResolveShowComponent extends Vue {
   statTypeEnum = StatTypeEnum
   objectTypeEnum = ObjectTypeEnum
   objectType = ObjectType

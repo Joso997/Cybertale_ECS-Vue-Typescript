@@ -6,19 +6,24 @@ import { SubObjectTypeEnum } from '../subObjectType'
 export namespace Manager.Events.Type{
 
    export abstract class RegionAbstract {
-     // protected persons: { [id: string] : object; } = {};
-     // protected abstract SetObjects() : Record<string, RegionEnum>;
-     // public abstract Objects: Record<string, string>;// TODO InteractableObjectTypeAbstract
-      public abstract Subscribe(_objectType: ObjectTypeEnum, _subObjectType: SubObjectTypeEnum, _statChangeDel:StatChangeDel) : void;
+     public Subscribe (_objectType: ObjectTypeEnum, _subObjectType: SubObjectTypeEnum, _statChangeDel:StatChangeDel): void {
+       ObjectType.ObjectTypes[_objectType].Subscribe(_subObjectType, _statChangeDel)
+     }
    }
 
   export class Form extends RegionAbstract {
-    /* protected SetObjects (): Record<string, region.RegionEnum> {
-      throw new Error('Method not implemented.')
-    } */
 
-    public Subscribe (_objectType: ObjectTypeEnum, _subObjectType: SubObjectTypeEnum, _statChangeDel:StatChangeDel): void {
-      ObjectType.ObjectTypes[_objectType].Subscribe(_subObjectType, _statChangeDel)
-    }
+  }
+
+  export class Table extends RegionAbstract {
+
+  }
+
+  export class TableColumn extends RegionAbstract {
+
+  }
+
+  export class Show extends RegionAbstract {
+
   }
 }

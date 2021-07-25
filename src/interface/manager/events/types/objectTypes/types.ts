@@ -2,9 +2,17 @@ import { SubObjectTypeEnum, SubObjectType } from '../subObjectType'
 import { StatChangeDel, StatChangeEventArgs } from '@/interface/manager/containerClasses/statChangeEventArgs'
 import { SimpleEventDispatcher } from 'ste-simple-events'
 import InputComponent from '@/components/InputComponent.vue'
+import SubmitButtonComponent from '@/components/SubmitButtonComponent.vue'
+import RowComponent from '@/components/RowComponent.vue'
+import TextAreaComponent from '@/components/TextAreaComponent.vue'
+import ResolveShowComponent from '@/components/ResolveShowComponent.vue'
+import { StatTypeEnum } from '../statType'
+import { ObjectTemplate } from '@/interface/manager/containerClasses/objectTemplate'
+
+export type LogicDelegate = (subObjectType: SubObjectTypeEnum) => void;
 
 export namespace Manager.Events.Type{
-   type LogicDelegate = (subObjectType: SubObjectTypeEnum) => void;
+
     export abstract class ObjectTypeAbstract {
        private LogicInvoked: SimpleEventDispatcher<SubObjectTypeEnum> = new SimpleEventDispatcher<SubObjectTypeEnum>();
 
@@ -13,12 +21,17 @@ export namespace Manager.Events.Type{
 
       public abstract GetVueComponent(): any;
 
-      public InvokeStatChange (_statType: any, _amount: any): void {
+      public InvokeStatChange (_statType: StatTypeEnum, _amount: any): void {
         throw new Error('Method not implemented.')
+      }
+
+      public ChooseSubType (_object : ObjectTemplate) : boolean {
+        return SubObjectType.SubObjectTypes[_object.SubObjectEnum].ChooseAction(_object, this.InvokeLogic.bind(this))
       }
 
       protected InvokeLogic (_subObjectType: SubObjectTypeEnum) : void {
         this.LogicInvoked.dispatch(_subObjectType)
+        console.log(this.LogicInvoked)
       }
 
       public SubscribeLogic (logicDel: LogicDelegate) : void {
@@ -37,7 +50,7 @@ export namespace Manager.Events.Type{
    export abstract class IChangeStat extends ObjectTypeAbstract {
     private StatChangeEvent:SimpleEventDispatcher<StatChangeEventArgs> = new SimpleEventDispatcher<StatChangeEventArgs>();
 
-    public InvokeStatChange (_statType: any, _amount: any) : void{
+    public InvokeStatChange (_statType: StatTypeEnum, _amount: any) : void{
       this.StatChangeEvent.dispatch(new StatChangeEventArgs(_statType, _amount))
     }
 
@@ -55,9 +68,27 @@ export namespace Manager.Events.Type{
      }
    }
 
-   export class SubmitButton extends IChangeStat {
+   export class Button extends IChangeStat {
      public GetVueComponent () {
-       throw new Error('Method not implemented.')
+       return SubmitButtonComponent
+     }
+   }
+
+   export class Row extends IChangeStat {
+     public GetVueComponent () {
+       return RowComponent
+     }
+   }
+
+   export class Text extends IChangeStat {
+     public GetVueComponent () {
+       return TextAreaComponent
+     }
+   }
+
+   export class ShowResolve extends IChangeStat {
+     public GetVueComponent () {
+       return ResolveShowComponent
      }
    }
 }

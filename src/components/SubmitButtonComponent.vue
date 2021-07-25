@@ -1,12 +1,5 @@
 <template>
-  <div class="mb-3 row justify-content-md-center">
-    <div class="col"></div>
-    <div class="col">
-      <label class="form-label h3">{{object.Stats[statTypeEnum.Title].Data }}</label>
-      <input :class="`${object.Stats[statTypeEnum.Design].Data}`" v-model="object.Stats[statTypeEnum.Value].Data"  placeholder="edit me">
-    </div>
-    <div class="col"></div>
-  </div>
+  <button :class="`${object.Stats[statTypeEnum.Design].Data}`" @Click='objectType.ObjectTypes[object.ObjectEnum].ChooseSubType(object)'>{{object.Stats[statTypeEnum.Title].Data}}</button>
 </template>
 
 <script lang="ts">
@@ -18,7 +11,7 @@ import { ObjectType, StatTypeEnum, ObjectTypeEnum } from '@/interface/manager/ev
     object: ObjectTemplate
   }
 })
-export default class InputComponent extends Vue {
+export default class SubmitButtonComponent extends Vue {
   statTypeEnum = StatTypeEnum
   objectTypeEnum = ObjectTypeEnum
   objectType = ObjectType
