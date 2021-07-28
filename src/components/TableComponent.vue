@@ -8,7 +8,7 @@
     </tr>
   </thead>
   <tbody>
-    <component  v-for="(_objectTemplate, key, index) in objectTemplates" :key="`${ key }-${ index }`" :is="getComponent(_objectTemplate.ObjectEnum)" :object='_objectTemplate'> </component>
+    <component  v-for="(_objectTemplate, key, index) in objectTemplates" :key="`${ key }-${ index }`" :is="getComponent(_objectTemplate.ObjectEnum)" :object='_objectTemplate' :index='key'></component>
   </tbody>
 </table>
 </template>

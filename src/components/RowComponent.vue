@@ -1,6 +1,6 @@
 <template>
   <tr>
-    <th scope="row">{{object.Stats[statTypeEnum.Id].Data}}</th>
+    <th scope="row">{{index+1}}</th>
     <td>{{object.Stats[statTypeEnum.Value].Data}}</td>
     <td>
       <component class="ms-3"  v-for="(_objectTemplate, key, index) in objectTemplates" :key="`${ key }-${ index }`" :is="getComponent(_objectTemplate.ObjectEnum)" :object='_objectTemplate'> </component>
@@ -16,7 +16,8 @@ import { MechanicAbstract } from '@/interface/manager/mechanics/mechanicAbstract
 import { RegionEnum, ObjectTypeEnum, SubObjectTypeEnum, ActionTypeEnum, StatTypeEnum, StatType, ObjectType } from '@/interface/manager/events/types/index'
 @Options({
   props: {
-    object: ObjectTemplate
+    object: ObjectTemplate,
+    index: Number
   }
 })
 export default class ListComponent extends Vue {
@@ -25,6 +26,7 @@ export default class ListComponent extends Vue {
   objectTypeEnum = ObjectTypeEnum
   objectType = ObjectType
   object!: ObjectTemplate
+  index!: number
   objectTemplates = this.mechanic.InitSet(
     [
       new ObjectTemplate(RegionEnum.TableColumn, ObjectTypeEnum.Button, SubObjectTypeEnum.Left, ActionTypeEnum.Click, {
@@ -56,6 +58,7 @@ export default class ListComponent extends Vue {
   }
 
   getComponent (_objectEnum: number) {
+    console.log(this.index)
     return ObjectType.ObjectTypes[_objectEnum].GetVueComponent()
   }
 }
