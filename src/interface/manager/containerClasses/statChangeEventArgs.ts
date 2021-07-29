@@ -6,7 +6,7 @@ export class StatChangeEventArgs {
 
     public constructor (_statType: StatTypeEnum, _amount: any) {
       this.StatType = _statType
-      this.Amount = _amount.target.value
+      this.Amount = _amount
     }
 }
 

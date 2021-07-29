@@ -23,14 +23,11 @@ export class ObjectTemplate {
 
   subscribe () : void {
     console.log(this.Stats)
-    RegionType.RegionTypes[this.Region].Subscribe(this.ObjectEnum, this.SubObjectEnum, this.changeStat)
+    RegionType.RegionTypes[this.Region].Subscribe(this.ObjectEnum, this.SubObjectEnum, this.changeStat.bind(this))
   }
 
   changeStat (e: StatChangeEventArgs) : void {
-    console.log(e.Amount)
-    console.log(this)
     this.Stats[e.StatType].Data = e.Amount
-    console.log('here2')
     this.Stats[e.StatType].CheckRequirements(this)
   }
 }

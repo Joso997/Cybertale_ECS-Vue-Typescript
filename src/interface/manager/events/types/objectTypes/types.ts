@@ -25,13 +25,12 @@ export namespace Manager.Events.Type{
         throw new Error('Method not implemented.')
       }
 
-      public ChooseSubType (_object : ObjectTemplate) : boolean {
-        return SubObjectType.SubObjectTypes[_object.SubObjectEnum].ChooseAction(_object, this.InvokeLogic.bind(this))
+      public ChooseSubType (_object : ObjectTemplate, _data : any = null) : boolean {
+        return SubObjectType.SubObjectTypes[_object.SubObjectEnum].ChooseAction(_object, _data, this.InvokeLogic.bind(this))
       }
 
       protected InvokeLogic (_subObjectType: SubObjectTypeEnum) : void {
         this.LogicInvoked.dispatch(_subObjectType)
-        console.log(this.LogicInvoked)
       }
 
       public SubscribeLogic (logicDel: LogicDelegate) : void {

@@ -3,7 +3,7 @@
     <div class="col"></div>
     <div class="col">
       <label class="form-label h3">{{object.Stats[statTypeEnum.Title].Data }}</label>
-      <input :class="`${object.Stats[statTypeEnum.Design].Data}`" v-model="object.Stats[statTypeEnum.Value].Data"  placeholder="edit me">
+      <input :class="`${object.Stats[statTypeEnum.Design].Data}`" :value="object.Stats[statTypeEnum.Value].Data" @change="objectType.ObjectTypes[object.ObjectEnum].ChooseSubType(object, $event.target.value)" placeholder="edit me">
     </div>
     <div class="col"></div>
   </div>
