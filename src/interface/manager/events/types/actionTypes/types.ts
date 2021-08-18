@@ -35,6 +35,19 @@ export namespace Manager.Events.Type{
       }
     }
 
+    export class InsertUrl extends MethodTypeAbstract {
+      public Act (_object: ObjectTemplate, _data : any, _invokeLogic: LogicDelegate): boolean {
+        this.Enact(_data).then(response => (_object.Stats[StatTypeEnum.Value].Data = response))
+        return true
+      }
+
+      public async Enact (_data : any): Promise<any> {
+        // URLs starting with http://, https://, or ftp://
+        const regexp = /^(?:(?:https?|ftp):\/\/)?(?:(?!(?:10|127)(?:\.\d{1,3}){3})(?!(?:169\.254|192\.168)(?:\.\d{1,3}){2})(?!172\.(?:1[6-9]|2\d|3[0-1])(?:\.\d{1,3}){2})(?:[1-9]\d?|1\d\d|2[01]\d|22[0-3])(?:\.(?:1?\d{1,2}|2[0-4]\d|25[0-5])){2}(?:\.(?:[1-9]\d?|1\d\d|2[0-4]\d|25[0-4]))|(?:(?:[a-z\u00a1-\uffff0-9]-*)*[a-z\u00a1-\uffff0-9]+)(?:\.(?:[a-z\u00a1-\uffff0-9]-*)*[a-z\u00a1-\uffff0-9]+)*(?:\.(?:[a-z\u00a1-\uffff]{2,})))(?::\d{2,5})?(?:\/\S*)?$/
+        return await regexp.test(_data) ? _data : 'Invalid Url'
+      }
+    }
+
     export class Click extends MethodTypeAbstract {
       public Act (_object: ObjectTemplate, _data : any, _invokeLogic: LogicDelegate): boolean {
         if (_object.Region === RegionEnum.TableColumn) {
