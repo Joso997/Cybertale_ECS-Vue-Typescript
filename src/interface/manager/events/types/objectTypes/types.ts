@@ -46,7 +46,17 @@ export namespace Manager.Events.Type{
       }
     }
 
-   export abstract class IChangeStat extends ObjectTypeAbstract {
+   abstract class Default extends ObjectTypeAbstract {
+     public InvokeStatChange (_statType: StatTypeEnum, _amount: any) : void{
+       throw new Error('Method not implemented.')
+     }
+
+     public Subscribe (_subObjectType:SubObjectTypeEnum, _statChangeDel:StatChangeDel) :void{
+       throw new Error('Method not implemented.')
+     }
+   }
+
+   abstract class IChangeStat extends ObjectTypeAbstract {
     private StatChangeEvent:SimpleEventDispatcher<StatChangeEventArgs> = new SimpleEventDispatcher<StatChangeEventArgs>();
 
     public InvokeStatChange (_statType: StatTypeEnum, _amount: any) : void{
@@ -54,9 +64,6 @@ export namespace Manager.Events.Type{
     }
 
     public Subscribe (_subObjectType:SubObjectTypeEnum, _statChangeDel:StatChangeDel) :void{
-      /* if(statChangeDel == null)
-          subObjectType.SubObjectTypes[subObjectType].Subscribe(statChangeDel);
-      else */
       this.StatChangeEvent.subscribe(SubObjectType.SubObjectTypes[_subObjectType].Subscribe(_statChangeDel))
     }
    }
@@ -67,7 +74,7 @@ export namespace Manager.Events.Type{
      }
    }
 
-   export class Button extends IChangeStat {
+   export class Button extends Default {
      public GetVueComponent () {
        return SubmitButtonComponent
      }

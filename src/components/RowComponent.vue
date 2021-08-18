@@ -3,7 +3,7 @@
     <th scope="row">{{index+1}}</th>
     <td>{{object.Stats[statTypeEnum.Value].Data}}</td>
     <td>
-      <component class="ms-3"  v-for="(_objectTemplate, key, index) in objectTemplates" :key="`${ key }-${ index }`" :is="getComponent(_objectTemplate.ObjectEnum)" :object='_objectTemplate'> </component>
+      <component class="ms-3"  v-for="(_objectTemplate, key, index) in objectTemplates" :key="`${ key }-${ index }`" :is="getComponent(_objectTemplate.Region, _objectTemplate.ObjectEnum)" :object='_objectTemplate'> </component>
     </td>
   </tr>
 </template>
@@ -13,7 +13,7 @@ import { Options, Vue } from 'vue-class-component'
 import { ObjectTemplate } from '@/interface/manager/containerClasses/objectTemplate'
 import { Manager } from '@/interface/manager/mechanics/rowMechanic'
 import { MechanicAbstract } from '@/interface/manager/mechanics/mechanicAbstract'
-import { RegionEnum, ObjectTypeEnum, SubObjectTypeEnum, ActionTypeEnum, StatTypeEnum, StatType, ObjectType } from '@/interface/manager/events/types/index'
+import { RegionEnum, ObjectTypeEnum, SubObjectTypeEnum, ActionTypeEnum, StatTypeEnum, StatType, ObjectType, RegionType } from '@/interface/manager/events/types/index'
 @Options({
   props: {
     object: ObjectTemplate,
@@ -31,23 +31,17 @@ export default class ListComponent extends Vue {
     [
       new ObjectTemplate(RegionEnum.TableColumn, ObjectTypeEnum.Button, SubObjectTypeEnum.Left, ActionTypeEnum.Click, {
         [StatTypeEnum.Title]: StatType.StatTypes[StatTypeEnum.Title]().CreateStat().InitData('Izbriši'),
-        [StatTypeEnum.Value]: StatType.StatTypes[StatTypeEnum.Value]().CreateStat(),
         [StatTypeEnum.Design]: StatType.StatTypes[StatTypeEnum.Design]().CreateStat().InitData('btn btn-outline-danger'),
-        [StatTypeEnum.Label]: StatType.StatTypes[StatTypeEnum.Label]().CreateStat(),
         [StatTypeEnum.Id]: StatType.StatTypes[StatTypeEnum.Id]().CreateStat().InitData(this.object.Stats[StatTypeEnum.Id].Data)
       }),
       new ObjectTemplate(RegionEnum.TableColumn, ObjectTypeEnum.Button, SubObjectTypeEnum.Middle, ActionTypeEnum.Click, {
         [StatTypeEnum.Title]: StatType.StatTypes[StatTypeEnum.Title]().CreateStat().InitData('Uredi'),
-        [StatTypeEnum.Value]: StatType.StatTypes[StatTypeEnum.Value]().CreateStat(),
         [StatTypeEnum.Design]: StatType.StatTypes[StatTypeEnum.Design]().CreateStat().InitData('btn btn-outline-warning'),
-        [StatTypeEnum.Label]: StatType.StatTypes[StatTypeEnum.Label]().CreateStat(),
         [StatTypeEnum.Id]: StatType.StatTypes[StatTypeEnum.Id]().CreateStat().InitData(this.object.Stats[StatTypeEnum.Id].Data)
       }),
       new ObjectTemplate(RegionEnum.TableColumn, ObjectTypeEnum.Button, SubObjectTypeEnum.Right, ActionTypeEnum.Click, {
         [StatTypeEnum.Title]: StatType.StatTypes[StatTypeEnum.Title]().CreateStat().InitData('Pregledaj'),
-        [StatTypeEnum.Value]: StatType.StatTypes[StatTypeEnum.Value]().CreateStat(),
         [StatTypeEnum.Design]: StatType.StatTypes[StatTypeEnum.Design]().CreateStat().InitData('btn btn-outline-success'),
-        [StatTypeEnum.Label]: StatType.StatTypes[StatTypeEnum.Label]().CreateStat(),
         [StatTypeEnum.Id]: StatType.StatTypes[StatTypeEnum.Id]().CreateStat().InitData(this.object.Stats[StatTypeEnum.Id].Data)
       })
     ]
@@ -57,9 +51,8 @@ export default class ListComponent extends Vue {
     this.mechanic.UnsubscribeConditions()
   }
 
-  getComponent (_objectEnum: number) {
-    console.log(this.index)
-    return ObjectType.ObjectTypes[_objectEnum].GetVueComponent()
+  getComponent (_regionEnum : number, _objectEnum: number) {
+    return RegionType.RegionTypes[_regionEnum].ObjectTypes[_objectEnum].GetVueComponent()
   }
 }
 </script>

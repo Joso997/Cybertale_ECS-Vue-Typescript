@@ -8,8 +8,4 @@ export class ActionType {
    [ActionTypeEnum.Click]: new Manager.Events.Type.Click(),
    [ActionTypeEnum.Insert]: new Manager.Events.Type.Insert()
  }
-
- public static Init () : void{
-   // ObjectType.ObjectTypes[ObjectTypeEnum.Field] = new Types.Object.Field()
- }
 }

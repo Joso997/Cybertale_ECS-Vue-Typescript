@@ -6,6 +6,7 @@ import { Manager as Stat } from '../events/types/statTypes/types'
 import http from '@/http-common'
 import { StatType, StatTypeEnum } from '../events/types/statType'
 import router from '@/router'
+import { RegionEnum, RegionType } from '../events/types/region'
 
 export namespace Manager.Mechanic{
 
@@ -20,13 +21,19 @@ export namespace Manager.Mechanic{
         console.log(this.id)
         const response = await http.get('http://blog.test/api/form')
         return (this.ObjectTemplates = response.data.map((_object: any) => {
-          return new ObjectTemplate(_object.Region, _object.ObjectEnum, _object.SubObjectEnum, _object.ActionEnum, this.reStructure(_object.Stats, { [StatTypeEnum.Id]: StatType.StatTypes[StatTypeEnum.Id]().CreateStat().InitData(String(this.id)) }))
+          return new ObjectTemplate(_object.Region, _object.ObjectEnum,
+            _object.SubObjectEnum, _object.ActionEnum, this.reStructure(_object.Stats,
+              {
+                [StatTypeEnum.Id]: StatType.StatTypes[StatTypeEnum.Id]().CreateStat()
+                  .InitData(String(this.id))
+              }))
         }))
       }
       const response = await http.get('http://blog.test/api/entity/' + this.id)
       this.inEdit = true
       return (this.ObjectTemplates = response.data.map((_object: any) => {
-        return new ObjectTemplate(_object.Region, _object.ObjectEnum, _object.SubObjectEnum, _object.ActionEnum, this.reStructure(_object.Stats))
+        return new ObjectTemplate(_object.Region, _object.ObjectEnum,
+          _object.SubObjectEnum, _object.ActionEnum, this.reStructure(_object.Stats))
       }))
     }
 
@@ -53,21 +60,21 @@ export namespace Manager.Mechanic{
     }
 
     protected SubscribeConditions (): void {
-      ObjectType.ObjectTypes[ObjectTypeEnum.Button].SubscribeLogic(this.Button.bind(this))
+      RegionType.RegionTypes[RegionEnum.Form].ObjectTypes[ObjectTypeEnum.Button].SubscribeLogic(this.Button.bind(this))
     }
 
     public UnsubscribeConditions () {
-      ObjectType.ObjectTypes[ObjectTypeEnum.Button].NullifyLogic()
+      RegionType.RegionTypes[RegionEnum.Form].ObjectTypes[ObjectTypeEnum.Button].NullifyLogic()
     }
 
-    protected Button (_subObjectType: SubObjectTypeEnum): void {
+    protected async Button (_subObjectType: SubObjectTypeEnum): Promise<void> {
       switch (_subObjectType) {
         case SubObjectTypeEnum.Middle:
           if (this.inEdit) {
-            http.patch('http://blog.test/api/entity/' + this.id, this.ObjectTemplates/* .filter((object) => { return object.ObjectEnum === ObjectTypeEnum.Field }) */)
+            await http.patch('http://blog.test/api/entity/' + this.id, this.ObjectTemplates)
               .then(response => (router.push({ name: 'Show', params: { id: response.data.id } })))
           } else {
-            http.post('http://blog.test/api/entity', this.ObjectTemplates/* .filter((object) => { return object.ObjectEnum === ObjectTypeEnum.Field }) */)
+            await http.post('http://blog.test/api/entity', this.ObjectTemplates)
               .then(response => (router.push({ name: 'Show', params: { id: response.data.id } })))
           }
           break

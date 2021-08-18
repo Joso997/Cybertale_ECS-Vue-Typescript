@@ -17,38 +17,22 @@ export namespace Manager.Events.Type{
       public Subscribe (_statChangeDel: StatChangeDel): StatChangeDel {
         return _statChangeDel
       }
-
-      protected SubscribeCondition (sender: () => void): void {
-        throw new Error('Method not implemented.')
-      }
     }
 
     export class Middle extends SubObjectTypeAbstract {
       public Subscribe (_statChangeDel: StatChangeDel): StatChangeDel {
-        return _statChangeDel
-      }
-
-      protected SubscribeCondition (sender: () => void): void {
         throw new Error('Method not implemented.')
       }
     }
 
     export class Left extends SubObjectTypeAbstract {
       public Subscribe (_statChangeDel: StatChangeDel): StatChangeDel {
-        return _statChangeDel
-      }
-
-      protected SubscribeCondition (sender: () => void): void {
         throw new Error('Method not implemented.')
       }
     }
 
     export class Right extends SubObjectTypeAbstract {
       public Subscribe (_statChangeDel: StatChangeDel): StatChangeDel {
-        return _statChangeDel
-      }
-
-      protected SubscribeCondition (sender: () => void): void {
         throw new Error('Method not implemented.')
       }
     }

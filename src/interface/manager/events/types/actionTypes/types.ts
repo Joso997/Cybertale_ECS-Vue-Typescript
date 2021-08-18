@@ -10,7 +10,7 @@ import { ObjectType } from '../objectType'
 export namespace Manager.Events.Type{
 
     export abstract class MethodTypeAbstract {
-      public abstract Enact():void;
+      // public abstract Enact():void;
       public abstract Act(_object:ObjectTemplate, _data : any, _invokeLogic: LogicDelegate): boolean;
     }
 
@@ -26,12 +26,12 @@ export namespace Manager.Events.Type{
 
     export class Insert extends MethodTypeAbstract {
       public Act (_object: ObjectTemplate, _data : any, _invokeLogic: LogicDelegate): boolean {
-        _object.Stats[StatTypeEnum.Value].Data = _data.charAt(0).toUpperCase() + _data.slice(1)
+        this.Enact(_data).then(response => (_object.Stats[StatTypeEnum.Value].Data = response))
         return true
       }
 
-      public Enact (): void {
-        throw new Error('Method not implemented.')
+      public async Enact (_data : any): Promise<any> {
+        return await _data.charAt(0).toUpperCase() + _data.slice(1)
       }
     }
 

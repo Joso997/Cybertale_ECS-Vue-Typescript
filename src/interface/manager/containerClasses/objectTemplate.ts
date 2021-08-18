@@ -22,8 +22,7 @@ export class ObjectTemplate {
   }
 
   subscribe () : void {
-    console.log(this.Stats)
-    RegionType.RegionTypes[this.Region].Subscribe(this.ObjectEnum, this.SubObjectEnum, this.changeStat.bind(this))
+    if (this.SubObjectEnum === SubObjectTypeEnum.ParentObject) { RegionType.RegionTypes[this.Region].Subscribe(this.ObjectEnum, this.SubObjectEnum, this.changeStat.bind(this)) }
   }
 
   changeStat (e: StatChangeEventArgs) : void {

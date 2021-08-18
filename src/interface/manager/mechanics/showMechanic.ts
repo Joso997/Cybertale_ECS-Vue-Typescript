@@ -5,7 +5,7 @@ import { MechanicAbstract } from './mechanicAbstract'
 import { Manager as Stat } from '../events/types/statTypes/types'
 import http from '@/http-common'
 import { StatType, StatTypeEnum } from '../events/types/statType'
-import { RegionEnum, ActionTypeEnum } from '@/interface/manager/events/types/index'
+import { RegionEnum, ActionTypeEnum, RegionType } from '@/interface/manager/events/types/index'
 
 export namespace Manager.Mechanic{
 
@@ -40,11 +40,11 @@ export namespace Manager.Mechanic{
     }
 
     protected SubscribeConditions (): void {
-      ObjectType.ObjectTypes[ObjectTypeEnum.Button].SubscribeLogic(this.Button.bind(this))
+      // RegionType.RegionTypes[RegionEnum.Show].ObjectTypes[ObjectTypeEnum.Button].SubscribeLogic(this.Button.bind(this))
     }
 
     public UnsubscribeConditions () {
-      ObjectType.ObjectTypes[ObjectTypeEnum.Button].NullifyLogic()
+      // RegionType.RegionTypes[RegionEnum.Show].ObjectTypes[ObjectTypeEnum.Button].NullifyLogic()
     }
 
     protected Button (_subObjectType: SubObjectTypeEnum): void {

@@ -5,12 +5,12 @@ export enum ObjectTypeEnum {
 }
 
 export class ObjectType {
- public static ObjectTypes: { [index: number]: Manager.Events.Type.ObjectTypeAbstract } =
+  /* public static ObjectTypes: { [index: number]: Manager.Events.Type.ObjectTypeAbstract } =
  {
    [ObjectTypeEnum.Field]: new Manager.Events.Type.Field(),
    [ObjectTypeEnum.Button]: new Manager.Events.Type.Button(),
    [ObjectTypeEnum.Row]: new Manager.Events.Type.Row(),
    [ObjectTypeEnum.Text]: new Manager.Events.Type.Text(),
    [ObjectTypeEnum.ShowResolve]: new Manager.Events.Type.ShowResolve()
- }
+ } */
 }

@@ -3,7 +3,7 @@
     <div class="col"></div>
     <div class="col">
       <label class="form-label h3">{{object.Stats[statTypeEnum.Title].Data }}</label>
-      <input :class="`${object.Stats[statTypeEnum.Design].Data}`" :value="object.Stats[statTypeEnum.Value].Data" @change="objectType.ObjectTypes[object.ObjectEnum].ChooseSubType(object, $event.target.value)" placeholder="edit me">
+      <input :class="`${object.Stats[statTypeEnum.Design].Data}`" :value="object.Stats[statTypeEnum.Value].Data" @change="regionType.RegionTypes[object.Region].ObjectTypes[object.ObjectEnum].ChooseSubType(object, $event.target.value)" placeholder="edit me">
     </div>
     <div class="col"></div>
   </div>
@@ -12,7 +12,7 @@
 <script lang="ts">
 import { Options, Vue } from 'vue-class-component'
 import { ObjectTemplate } from '@/interface/manager/containerClasses/objectTemplate'
-import { ObjectType, StatTypeEnum, ObjectTypeEnum } from '@/interface/manager/events/types/index'
+import { ObjectType, StatTypeEnum, ObjectTypeEnum, RegionType, RegionEnum } from '@/interface/manager/events/types/index'
 @Options({
   props: {
     object: ObjectTemplate
@@ -22,6 +22,8 @@ export default class InputComponent extends Vue {
   statTypeEnum = StatTypeEnum
   objectTypeEnum = ObjectTypeEnum
   objectType = ObjectType
+  regionType = RegionType
+  regionEnum = RegionEnum
   object!: ObjectTemplate
 }
 </script>

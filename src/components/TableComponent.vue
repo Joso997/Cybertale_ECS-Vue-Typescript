@@ -8,7 +8,7 @@
     </tr>
   </thead>
   <tbody>
-    <component  v-for="(_objectTemplate, key, index) in objectTemplates" :key="`${ key }-${ index }`" :is="getComponent(_objectTemplate.ObjectEnum)" :object='_objectTemplate' :index='key'></component>
+    <component  v-for="(_objectTemplate, key, index) in objectTemplates" :key="`${ key }-${ index }`" :is="getComponent(_objectTemplate.Region, _objectTemplate.ObjectEnum)" :object='_objectTemplate' :index='key'></component>
   </tbody>
 </table>
 </template>
@@ -18,7 +18,7 @@ import { Options, Vue } from 'vue-class-component'
 import { ObjectTemplate } from '@/interface/manager/containerClasses/objectTemplate'
 import { Manager } from '@/interface/manager/mechanics/tableMechanic'
 import { MechanicAbstract } from '@/interface/manager/mechanics/mechanicAbstract'
-import { RegionEnum, ObjectTypeEnum, SubObjectTypeEnum, ActionTypeEnum, StatTypeEnum, StatType, ObjectType } from '@/interface/manager/events/types/index'
+import { RegionEnum, ObjectTypeEnum, SubObjectTypeEnum, ActionTypeEnum, StatTypeEnum, StatType, ObjectType, RegionType } from '@/interface/manager/events/types/index'
 @Options({
   props: {
     msg: String
@@ -44,8 +44,8 @@ export default class TableComponent extends Vue {
     this.renderComponent = true
   }
 
-  getComponent (_objectEnum: number) {
-    return ObjectType.ObjectTypes[_objectEnum].GetVueComponent()
+  getComponent (_regionEnum : number, _objectEnum: number) {
+    return RegionType.RegionTypes[_regionEnum].ObjectTypes[_objectEnum].GetVueComponent()
   }
 }
 </script>
