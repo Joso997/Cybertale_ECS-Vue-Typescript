@@ -18,7 +18,9 @@ export namespace Manager.Events.Type{
     {
       [ObjectTypeEnum.Field]: new ObjectTypeAbstract.Events.Type.Field(),
       [ObjectTypeEnum.Button]: new ObjectTypeAbstract.Events.Type.Button(),
-      [ObjectTypeEnum.Text]: new ObjectTypeAbstract.Events.Type.Text()
+      [ObjectTypeEnum.Text]: new ObjectTypeAbstract.Events.Type.Text(),
+      [ObjectTypeEnum.ContentToolkitObject]: new ObjectTypeAbstract.Events.Type.ContentToolkitObject(),
+      [ObjectTypeEnum.ModularText]: new ObjectTypeAbstract.Events.Type.ModularText()
     }
   }
 
@@ -40,6 +42,13 @@ export namespace Manager.Events.Type{
     public ObjectTypes: { [index: number]: ObjectTypeAbstract.Events.Type.ObjectTypeAbstract } =
     {
       [ObjectTypeEnum.ShowResolve]: new ObjectTypeAbstract.Events.Type.ShowResolve()
+    }
+  }
+
+  export class ContentToolkit extends RegionAbstract {
+    public ObjectTypes: { [index: number]: ObjectTypeAbstract.Events.Type.ObjectTypeAbstract } =
+    {
+      [ObjectTypeEnum.Button]: new ObjectTypeAbstract.Events.Type.Button()
     }
   }
 }

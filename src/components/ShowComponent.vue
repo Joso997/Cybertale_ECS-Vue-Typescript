@@ -31,6 +31,7 @@ export default class ShowComponent extends Vue {
 
   async Init () {
     this.objectTemplates = this.mechanic.InitSet(await this.mechanic.InitGet(this.$route.params.id === undefined ? -1 : Number(this.$route.params.id)))
+    console.log(this.objectTemplates)
     this.renderComponent = true
   }
 

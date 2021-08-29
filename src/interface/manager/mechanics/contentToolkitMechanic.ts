@@ -9,7 +9,7 @@ import { EventHandlerType } from '../events/types/objectTypes/types'
 
 export namespace Manager.Mechanic{
 
-  export class TableMechanic extends MechanicAbstract {
+  export class ContentToolkitMechanic extends MechanicAbstract {
     public async InitGet (_id = -1): Promise<ObjectTemplate[]> {
       this.ObjectTemplates = []
       const response = await http.get('http://blog.test/api/entity')
@@ -45,8 +45,8 @@ export namespace Manager.Mechanic{
       // RegionType.RegionTypes[RegionEnum.Table].ObjectTypes[ObjectTypeEnum.Button].NullifyLogic()
     }
 
-    protected Button (_eventHandler: EventHandlerType): void {
-      throw new Error('Method not implemented.')
+    protected Button (eventHandler: EventHandlerType): void {
+      console.log('test')
     }
   }
 

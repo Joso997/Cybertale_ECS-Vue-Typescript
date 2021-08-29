@@ -1,7 +1,9 @@
 <template>
+  <div v-if="$route.params.id !== undefined" class="mb-5 mt-0"><component :is="getComponent(constEntity.Region, constEntity.ObjectEnum)" :object='constEntity' @click="upgrade()"></component></div>
   <form v-if="renderComponent">
     <component  v-for="(_objectTemplate, key, index) in objectTemplates" :key="`${ key }-${ index }`" :is="getComponent(_objectTemplate.Region, _objectTemplate.ObjectEnum)" :object='_objectTemplate'> </component>
   </form>
+
 </template>
 
 <script lang="ts">
@@ -20,6 +22,12 @@ export default class FormComponent extends Vue {
   mechanic: MechanicAbstract = new Manager.Mechanic.FormMechanic()
   renderComponent= false
   objectTemplates!: ObjectTemplate[]
+  constEntity = new ObjectTemplate(RegionEnum.Form, ObjectTypeEnum.Button, SubObjectTypeEnum.Right, ActionTypeEnum.Click, {
+    [StatTypeEnum.Title]: StatType.StatTypes[StatTypeEnum.Title]().CreateStat().InitData('Nadogradi Formu'),
+    [StatTypeEnum.Value]: StatType.StatTypes[StatTypeEnum.Value]().CreateStat(),
+    [StatTypeEnum.Design]: StatType.StatTypes[StatTypeEnum.Design]().CreateStat().InitData('btn btn-outline-primary'),
+    [StatTypeEnum.Label]: StatType.StatTypes[StatTypeEnum.Label]().CreateStat().InitData('AddParagraph')
+  })
 
   beforeUnmount () {
     this.mechanic.UnsubscribeConditions()
@@ -33,24 +41,15 @@ export default class FormComponent extends Vue {
     this.objectTemplates = this.mechanic.InitSet(await this.mechanic.InitGet(this.$route.params.id === undefined ? -1 : Number(this.$route.params.id)))
     this.renderComponent = true
   }
-  /* objectTemplates = this.mechanic.InitSet(
-    [
-      new ObjectTemplate(RegionEnum.Form, ObjectTypeEnum.Field, SubObjectTypeEnum.ParentObject, ActionTypeEnum.None, {
-        [StatTypeEnum.Title]: StatType.StatTypes[StatTypeEnum.Title]().CreateStat().InitData('Title'),
-        [StatTypeEnum.Value]: StatType.StatTypes[StatTypeEnum.Value]().CreateStat()
-      }),
-      new ObjectTemplate(RegionEnum.Form, ObjectTypeEnum.Field, SubObjectTypeEnum.ParentObject, ActionTypeEnum.None, {
-        [StatTypeEnum.Title]: StatType.StatTypes[StatTypeEnum.Title]().CreateStat(),
-        [StatTypeEnum.Value]: StatType.StatTypes[StatTypeEnum.Value]().CreateStat()
-      }),
-      new ObjectTemplate(RegionEnum.Form, ObjectTypeEnum.Button, SubObjectTypeEnum.Submit, ActionTypeEnum.Click, {
-        [StatTypeEnum.Title]: StatType.StatTypes[StatTypeEnum.Title]().CreateStat().InitData('Button')
-      })
-    ]
-  ) */
 
   getComponent (_regionEnum : number, _objectEnum: number) {
     return RegionType.RegionTypes[_regionEnum].ObjectTypes[_objectEnum].GetVueComponent()
+  }
+
+  upgrade () {
+    this.renderComponent = false
+    this.objectTemplates = this.mechanic.ObjectTemplates
+    this.renderComponent = true
   }
 }
 </script>

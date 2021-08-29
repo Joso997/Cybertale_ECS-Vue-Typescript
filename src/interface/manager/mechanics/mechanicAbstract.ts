@@ -1,10 +1,11 @@
 import { ObjectTemplate } from '../containerClasses/objectTemplate'
+import { EventHandlerType } from '../events/types/objectTypes/types'
 import { SubObjectTypeEnum } from '../events/types/subObjectType'
 
 export abstract class MechanicAbstract {
   protected abstract SubscribeConditions() : void;
   public abstract UnsubscribeConditions() : any;
-  protected abstract Button(_subObjectType: SubObjectTypeEnum) : void;
+  protected abstract Button(eventHandler: EventHandlerType) : void;
   constructor () {
     this.SubscribeConditions()
   }
@@ -13,5 +14,5 @@ export abstract class MechanicAbstract {
 
   public abstract InitSet(_objectTemplates: ObjectTemplate[]) : ObjectTemplate[];
 
-  protected ObjectTemplates!: ObjectTemplate[];
+  public ObjectTemplates!: ObjectTemplate[];
 }

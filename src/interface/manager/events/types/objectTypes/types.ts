@@ -6,15 +6,18 @@ import SubmitButtonComponent from '@/components/SubmitButtonComponent.vue'
 import RowComponent from '@/components/RowComponent.vue'
 import TextAreaComponent from '@/components/TextAreaComponent.vue'
 import ResolveShowComponent from '@/components/ResolveShowComponent.vue'
+import ContentToolkitComponent from '@/components/ContentToolkitComponent.vue'
+import TextAreaPartComponent from '@/components/TextAreaPartComponent.vue'
 import { StatTypeEnum } from '../statType'
 import { ObjectTemplate } from '@/interface/manager/containerClasses/objectTemplate'
 
-export type LogicDelegate = (subObjectType: SubObjectTypeEnum) => void;
+export type EventHandlerType = {subObjectType: SubObjectTypeEnum, payload: any}
+export type LogicDelegate = (eventHandler: EventHandlerType) => void;
 
 export namespace Manager.Events.Type{
 
     export abstract class ObjectTypeAbstract {
-       private LogicInvoked: SimpleEventDispatcher<SubObjectTypeEnum> = new SimpleEventDispatcher<SubObjectTypeEnum>();
+       private LogicInvoked: SimpleEventDispatcher<EventHandlerType> = new SimpleEventDispatcher<EventHandlerType>();
 
       // protected abstract SubscribeCondition(sender: () => void) : void;
       public abstract Subscribe(subObjectType:SubObjectTypeEnum, statChangeDel:StatChangeDel) : void;
@@ -29,8 +32,8 @@ export namespace Manager.Events.Type{
         return SubObjectType.SubObjectTypes[_object.SubObjectEnum].ChooseAction(_object, _data, this.InvokeLogic.bind(this))
       }
 
-      protected InvokeLogic (_subObjectType: SubObjectTypeEnum) : void {
-        this.LogicInvoked.dispatch(_subObjectType)
+      protected InvokeLogic (eventHandler: EventHandlerType) : void {
+        this.LogicInvoked.dispatch({ subObjectType: eventHandler.subObjectType, payload: eventHandler.payload })
       }
 
       public SubscribeLogic (logicDel: LogicDelegate) : void {
@@ -95,6 +98,18 @@ export namespace Manager.Events.Type{
    export class ShowResolve extends IChangeStat {
      public GetVueComponent () {
        return ResolveShowComponent
+     }
+   }
+
+   export class ContentToolkitObject extends IChangeStat {
+     public GetVueComponent () {
+       return ContentToolkitComponent
+     }
+   }
+
+   export class ModularText extends IChangeStat {
+     public GetVueComponent () {
+       return TextAreaPartComponent
      }
    }
 }

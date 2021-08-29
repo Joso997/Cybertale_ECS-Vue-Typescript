@@ -6,6 +6,7 @@ import { Manager as Stat } from '../events/types/statTypes/types'
 import http from '@/http-common'
 import { StatType, StatTypeEnum } from '../events/types/statType'
 import { RegionEnum, ActionTypeEnum, RegionType } from '@/interface/manager/events/types/index'
+import { EventHandlerType } from '../events/types/objectTypes/types'
 
 export namespace Manager.Mechanic{
 
@@ -47,7 +48,7 @@ export namespace Manager.Mechanic{
       // RegionType.RegionTypes[RegionEnum.Show].ObjectTypes[ObjectTypeEnum.Button].NullifyLogic()
     }
 
-    protected Button (_subObjectType: SubObjectTypeEnum): void {
+    protected Button (_eventHandler: EventHandlerType): void {
       console.log('test')
     }
   }

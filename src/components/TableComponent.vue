@@ -40,7 +40,6 @@ export default class TableComponent extends Vue {
 
   async Init () {
     this.objectTemplates = this.mechanic.InitSet(await this.mechanic.InitGet(-1))
-    console.log(this.objectTemplates)
     this.renderComponent = true
   }
 

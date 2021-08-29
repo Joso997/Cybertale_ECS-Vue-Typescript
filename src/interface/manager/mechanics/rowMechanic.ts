@@ -6,6 +6,7 @@ import http from '@/http-common'
 import { StatType, StatTypeEnum } from '../events/types/statType'
 import { RegionEnum, ActionTypeEnum, RegionType } from '@/interface/manager/events/types/index'
 import router from '@/router'
+import { EventHandlerType } from '../events/types/objectTypes/types'
 
 export namespace Manager.Mechanic{
 
@@ -45,10 +46,10 @@ export namespace Manager.Mechanic{
       // RegionType.RegionTypes[RegionEnum.TableColumn].ObjectTypes[ObjectTypeEnum.Button].NullifyLogic()
     }
 
-    protected Button (_subObjectType: SubObjectTypeEnum): void {
+    protected Button (eventHandler: EventHandlerType): void {
       console.log('test')
       const _id = this.ObjectTemplates[0].Stats[StatTypeEnum.Id].Data
-      switch (_subObjectType) {
+      switch (eventHandler.subObjectType) {
         case SubObjectTypeEnum.Left:// Izbriši
           http.delete('http://blog.test/api/entity/' + _id)
             .then(response => (router.go(0)))
